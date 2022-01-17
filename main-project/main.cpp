@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -17,12 +18,32 @@ int main()
     try
     {
         read("data.txt", protocols, size);
+        cout << "***** Протокол работы в Интернет *****\n\n";
         for (int i = 0; i < size; i++)
         {
-            cout << protocols[i]->start.hour << ':' << protocols[i]->start.min << ':' << protocols[i]->start.sec << '\n';
-            cout << protocols[i]->end.hour << ':' << protocols[i]->end.min << ':' << protocols[i]->end.sec << '\n';
-            cout << protocols[i]->received << '\n';
-            cout << protocols[i]->sent << '\n';
+            /********** вывод времени использования **********/
+            cout << "Начало..........: ";
+            // вывод времени начала сессии использования
+            cout << setw(2) << setfill('0') << protocols[i]->start.hour << ":";
+            cout << setw(2) << setfill('0') << protocols[i]->start.min << ":";
+            cout << setw(2) << setfill('0') << protocols[i]->start.sec << endl;
+            cout << "Конец...........: ";
+            // вывод времени конца сессии использования
+            cout << setw(2) << setfill('0') << protocols[i]->end.hour << ":";
+            cout << setw(2) << setfill('0') << protocols[i]->end.min << ":";
+            cout << setw(2) << setfill('0') << protocols[i]->end.sec << endl;
+
+            /********** вывод передачи данных **********/
+            cout << "Получено........: ";
+            // вывод размера полученных данных в байтах
+            cout << protocols[i]->received << endl;
+            cout << "Отправлено......: ";
+            // вывод размера отправленных данных в байтах
+            cout << protocols[i]->sent << endl;
+            
+            /********** вывод программы **********/
+            // вывод полного пути к исполняемой программе
+            cout << "Программа.......: ";
             cout << protocols[i]->path << endl;
             cout << '\n';
         }
