@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <Windows.h>
 
 using namespace std;
 
@@ -7,9 +8,13 @@ using namespace std;
 #include "file_reader.h"
 #include "constants.h"
 #include "filter.h"
+#include "processing.h"
 
 int main()
 {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
     setlocale(LC_ALL, "Russian");
     cout << "Лабораторная работа №8. GIT\n";
     cout << "Вариант №5. Протокол работы в Интернет\n";
@@ -54,6 +59,7 @@ int main()
         cout << "\nВыберите способ фильтрации или обработки данных:\n";
         cout << "1) Протокол использования сети Интернет программой Skype.\n";
         cout << "2) Протокол использования сети Интернет после 8:00:00.\n";
+        cout << "3) Вывести суммарное время использования сети Интернет заданной программой\n";
         cout << "\nВведите номер выбранного пункта: ";
         int item;
         cin >> item;
@@ -68,6 +74,25 @@ int main()
             check_function = check_results_by_time; // присваиваем в указатель на функцию соответствующую функцию
             cout << "***** Протокол использования сети Интернет после 8:00:00 *****\n\n";
             break;
+        case 3: {
+            cout << "***** Cуммарное время использования сети Интернет программой *****\n\n";
+
+            char* program = new char [MAX_STRING_SIZE];
+            cin.ignore();
+            cout << "Введите название программы: ";
+            cin.getline(program, MAX_STRING_SIZE, '\n');
+            int result = process(protocols, size, program);
+
+            int hour = result / 3600;
+            int min = result / 60 - hour * 60;
+            int sec = result - hour * 3600 - min * 60;
+
+            cout << setw(2) << setfill('0') << hour << ':';
+            cout << setw(2) << setfill('0') << min << ':';
+            cout << setw(2) << setfill('0') << sec << '\n';
+            break;
+        }
+
         default:
             throw "Некорректный номер пункта";
         }

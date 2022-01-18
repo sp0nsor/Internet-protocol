@@ -3,6 +3,6 @@
 
 #include "protocol.h"
 
-int process(protocol* array[], int size);
+int process(protocol* array[], int size, char* program_name);
 
 #endif
